@@ -14,7 +14,7 @@ const translations = {
   en: {
     title: 'TuneCraft',
     spotifyLogin: 'Connect Spotify',
-    placeholder: "Welcome to TuneCraft!\n- What it does: Creates custom Spotify playlists.\n- How to use it:\n  1. Connect your Spotify account.\n  2. Type your vibe (e.g., 'chill jazz' or 'party pop').\n  3. Pick 5 songs (free) or donate €2 for 10.\n  4. Hit 'Create Playlist' and enjoy!",
+    placeholder: "Welcome to TuneCraft!\n- What it does: Uses AI to craft unique Spotify playlists.\n- Be as creative as you want: 'cosmic disco for aliens' or 'rainy day blues'.\n- How to use it:\n  1. Connect Spotify.\n  2. Type your wildest vibe.\n  3. Choose 5 songs (free) or donate €2 for 10.\n  4. Click 'Create Playlist' to enjoy!",
     sliderLabel: 'How many songs?',
     createButton: 'Create Playlist',
     donateButton: 'Donate for More Songs',
@@ -28,7 +28,7 @@ const translations = {
   es: {
     title: 'TuneCraft',
     spotifyLogin: 'Conectar Spotify',
-    placeholder: "¡Bienvenido a TuneCraft!\n- Qué hace: Crea listas personalizadas en Spotify.\n- Cómo usarlo:\n  1. Conecta tu cuenta de Spotify.\n  2. Escribe tu vibe (p.ej., 'jazz relajado' o 'pop para fiestas').\n  3. Elige 5 canciones (gratis) o dona 2€ por 10.\n  4. Haz clic en 'Crear Lista' y disfruta!",
+    placeholder: "¡Bienvenido a TuneCraft!\n- Qué hace: Usa IA para crear listas únicas en Spotify.\n- Sé tan creativo como quieras: 'disco cósmico para aliens' o 'blues para días lluviosos'.\n- Cómo usarlo:\n  1. Conecta Spotify.\n  2. Escribe tu vibe más loco.\n  3. Elige 5 canciones (gratis) o dona 2€ por 10.\n  4. Haz clic en 'Crear Lista' y disfruta!",
     sliderLabel: '¿Cuántas canciones?',
     createButton: 'Crear Lista',
     donateButton: 'Donar por Más Canciones',
