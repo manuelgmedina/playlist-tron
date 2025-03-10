@@ -1,7 +1,4 @@
-const express = require('express');
 const axios = require('axios');
-const spotify = require('./spotify');
-const router = express.Router();
 
 async function getSuggestions(input, songCount, exclude = []) {
   try {
@@ -31,7 +28,7 @@ Nombre de la Playlist: [Nombre gracioso de dos palabras]
   }
 }
 
-async function searchTracks(suggestions, existingTracks = []) {
+async function searchTracks(suggestions, spotifyApi, existingTracks = []) {
   const tracks = [...existingTracks];
   const seenTracks = new Set(tracks);
   const lines = suggestions.split('\n').filter(line => line.trim() !== '');
@@ -49,7 +46,7 @@ async function searchTracks(suggestions, existingTracks = []) {
       let result;
 
       const exactQuery = `track:${title} artist:${artist}`;
-      result = await spotify.spotifyApi.searchTracks(exactQuery, { limit: 1 });
+      result = await spotifyApi.searchTracks(exactQuery, { limit: 1 });
       if (result.body.tracks.items.length > 0) {
         const trackUri = result.body.tracks.items[0].uri;
         const trackName = result.body.tracks.items[0].name;
@@ -63,7 +60,7 @@ async function searchTracks(suggestions, existingTracks = []) {
       }
 
       const titleQuery = `track:${title}`;
-      result = await spotify.spotifyApi.searchTracks(titleQuery, { limit: 1 });
+      result = await spotifyApi.searchTracks(titleQuery, { limit: 1 });
       if (result.body.tracks.items.length > 0) {
         const trackUri = result.body.tracks.items[0].uri;
         const trackName = result.body.tracks.items[0].name;
@@ -83,15 +80,15 @@ async function searchTracks(suggestions, existingTracks = []) {
   return { tracks, playlistName };
 }
 
-async function ensureExactTracks(input, songCount, initialSuggestions) {
-  let { tracks, playlistName } = await searchTracks(initialSuggestions);
+async function ensureExactTracks(input, songCount, spotifyApi, initialSuggestions) {
+  let { tracks, playlistName } = await searchTracks(initialSuggestions, spotifyApi);
   let attemptedSongs = initialSuggestions.split('\n').filter(line => line.trim() !== '' && !line.startsWith('Nombre de la Playlist:')).map(line => line.replace(/^\d+\.\s*/, '').trim());
 
   while (tracks.length < songCount) {
     console.log(`Solo se encontraron ${tracks.length} canciones de ${songCount}. Solicitando más sugerencias...`);
     const remaining = songCount - tracks.length;
     const newSuggestions = await getSuggestions(input, remaining, attemptedSongs);
-    const { tracks: newTracks, playlistName: newPlaylistName } = await searchTracks(newSuggestions, tracks);
+    const { tracks: newTracks, playlistName: newPlaylistName } = await searchTracks(newSuggestions, spotifyApi, tracks);
     tracks = newTracks;
     playlistName = playlistName || newPlaylistName;
     attemptedSongs = attemptedSongs.concat(newSuggestions.split('\n').filter(line => line.trim() !== '' && !line.startsWith('Nombre de la Playlist:')).map(line => line.replace(/^\d+\.\s*/, '').trim()));
@@ -100,48 +97,10 @@ async function ensureExactTracks(input, songCount, initialSuggestions) {
   return { tracks: tracks.slice(0, songCount), playlistName };
 }
 
-router.post('/create-playlist', async (req, res) => {
-  const request = req.body.request;
-  const songCount = req.body.songCount || 5; // Por defecto 5
-  const orderId = req.body.orderId;
+async function createPlaylist(input, songCount, spotifyApi) {
+  const initialSuggestions = await getSuggestions(input, songCount);
+  const { tracks, playlistName } = await ensureExactTracks(input, songCount, spotifyApi, initialSuggestions);
+  return { tracks, playlistName };
+}
 
-  // Verificar si se necesita pago según la cantidad de canciones
-  if (songCount > 5) {
-    const isPaidResponse = await fetch('http://localhost:3000/api/is-paid', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ orderId })
-    });
-    const { isPaid } = await isPaidResponse.json();
-
-    if (!isPaid) {
-      return res.status(403).json({ error: 'You need to donate $2 to create a 10-song playlist!' });
-    }
-  }
-
-  try {
-    const initialSuggestions = await getSuggestions(request, songCount);
-    const { tracks, playlistName } = await ensureExactTracks(request, songCount, initialSuggestions);
-    const playlistUrl = await spotify.createPlaylist(tracks, playlistName);
-
-    // Si el usuario pagó, marcar el pago como usado
-    if (songCount > 5 && orderId) {
-      await fetch('http://localhost:3000/api/use-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId })
-      });
-      console.log(`Payment ${orderId} used for ${songCount}-song playlist`);
-    }
-
-    res.json({ playlistUrl, playlistName });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-router.get('/test', (req, res) => {
-  res.send('Working from grok.js!');
-});
-
-module.exports = router;
+module.exports = { createPlaylist };
