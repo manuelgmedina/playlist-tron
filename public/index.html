@@ -4,298 +4,231 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playlist-o-Tron</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #e0e7ff, #dbeafe, #fef3c7);
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
       min-height: 100vh;
-      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 20px;
+      color: #1f2937;
     }
-    .logo {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      font-size: 14px;
-      color: #9ca3af;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      opacity: 0.8;
-      transition: color 0.3s ease, transform 0.3s ease;
+    .container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 500px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .logo:hover {
-      color: #60a5fa;
-      transform: scale(1.05);
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1e3a8a;
+      text-align: center;
+      margin-bottom: 30px;
+      letter-spacing: -0.5px;
     }
     .language-selector {
       position: absolute;
       top: 20px;
       right: 20px;
       display: flex;
-      gap: 10px;
+      gap: 12px;
     }
     .language-selector img {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       cursor: pointer;
+      border-radius: 50%;
       transition: transform 0.3s ease, opacity 0.3s ease;
     }
     .language-selector img:hover {
-      transform: scale(1.2);
-      opacity: 0.8;
-    }
-    .container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 450px;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      margin: 0 auto;
-    }
-    .container:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    }
-    h1 {
-      color: #6b7280;
-      font-size: 28px;
-      margin-bottom: 25px;
-      animation: typing 2s steps(20) forwards, blink 0.75s infinite;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 3px solid #60a5fa;
-    }
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-    a {
-      color: #9ca3af;
-      text-decoration: none;
-      font-size: 16px;
-      transition: color 0.3s ease, transform 0.2s ease;
-      display: inline-block;
-    }
-    a:hover {
-      color: #60a5fa;
-      transform: translateY(-2px);
+      transform: scale(1.15);
+      opacity: 0.85;
     }
     #spotifyLogin {
-      display: inline-block;
-      background: linear-gradient(135deg, #1db954, #1ed760);
+      display: block;
+      background: #1db954;
       color: white;
-      padding: 12px 28px;
-      border-radius: 25px;
-      font-size: 18px;
+      padding: 14px 0;
+      border-radius: 12px;
+      font-size: 16px;
       font-weight: 600;
+      text-align: center;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      animation: bounce 2s infinite;
-      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      transition: background 0.3s ease, transform 0.3s ease;
+      margin-bottom: 25px;
     }
     #spotifyLogin:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(29, 185, 84, 0.6);
-      background: linear-gradient(135deg, #1ed760, #1db954);
-    }
-    #spotifyLogin:active {
-      transform: scale(0.95);
-      box-shadow: 0 2px 10px rgba(29, 185, 84, 0.3);
-    }
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
+      background: #1ed760;
+      transform: scale(1.02);
     }
     textarea {
       width: 100%;
-      height: 120px;
-      padding: 15px;
-      border: 2px solid #d1d5db;
-      border-radius: 12px;
-      resize: none;
+      height: 100px;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
       font-size: 16px;
-      margin: 20px 0;
-      background-color: #f9fafb;
+      resize: none;
+      background: #f9fafb;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 20px;
     }
     textarea:focus {
-      border-color: #60a5fa;
-      box-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+      border-color: #3b82f6;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
       outline: none;
     }
     .slider-container {
-      margin: 20px 0;
-      text-align: center;
+      margin-bottom: 25px;
     }
     .slider-label {
-      color: #6b7280;
-      font-size: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #4b5563;
       margin-bottom: 10px;
+      text-align: left;
     }
     #songCountDisplay {
-      color: #60a5fa;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
-      margin-top: 10px;
-      transition: color 0.3s ease;
+      color: #3b82f6;
+      margin-top: 8px;
     }
     input[type="range"] {
       -webkit-appearance: none;
       width: 100%;
-      height: 8px;
-      background: linear-gradient(to right, #d1d5db, #60a5fa);
-      border-radius: 5px;
+      height: 6px;
+      background: linear-gradient(to right, #d1d5db 0%, #d1d5db 50%, #3b82f6 50%, #3b82f6 100%);
+      border-radius: 3px;
       outline: none;
-      transition: background 0.3s ease;
       cursor: pointer;
     }
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 20px;
-      height: 20px;
-      background: #a5b4fc;
+      width: 18px;
+      height: 18px;
+      background: #3b82f6;
       border-radius: 50%;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease;
     }
     input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
-      background: #818cf8;
+      transform: scale(1.1);
     }
     input[type="range"]::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
-      background: #a5b4fc;
+      width: 18px;
+      height: 18px;
+      background: #3b82f6;
       border-radius: 50%;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease;
     }
     input[type="range"]::-moz-range-thumb:hover {
-      transform: scale(1.2);
-      background: #818cf8;
+      transform: scale(1.1);
     }
     button {
-      background: linear-gradient(135deg, #a5b4fc, #818cf8);
-      color: white;
-      padding: 12px 25px;
+      width: 100%;
+      padding: 14px;
       border: none;
       border-radius: 12px;
       font-size: 16px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
       cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      margin: 10px 0;
-    }
-    button::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: width 0.6s ease, height 0.6s ease;
+      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 15px;
     }
     button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(129, 140, 248, 0.4);
-    }
-    button:hover::after {
-      width: 200px;
-      height: 200px;
+      background: linear-gradient(135deg, #60a5fa, #2563eb);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
     }
     button:active {
-      transform: scale(0.95);
+      transform: scale(0.98);
     }
     #donateButton {
-      background: linear-gradient(135deg, #f9a8d4, #f472b6);
+      background: linear-gradient(135deg, #ec4899, #db2777);
     }
     #donateButton:hover {
-      box-shadow: 0 6px 15px rgba(244, 114, 182, 0.4);
+      background: linear-gradient(135deg, #f472b6, #ec4899);
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
     }
-    #supportButton {
-      background: none;
-      color: #9ca3af;
-      border: 2px solid #d1d5db;
-      padding: 8px 15px;
-      font-size: 14px;
-      margin-top: 15px;
-      transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-    }
-    #supportButton:hover {
-      color: #60a5fa;
-      border-color: #60a5fa;
-      transform: scale(1.05);
-      box-shadow: none;
-    }
-    #supportButton::after {
-      display: none;
+    .support-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
     }
     #supportAmount {
-      width: 80px;
-      padding: 8px;
-      border: 2px solid #d1d5db;
+      width: 100px;
+      padding: 10px;
+      border: 1px solid #d1d5db;
       border-radius: 8px;
       font-size: 14px;
-      margin-right: 10px;
-      background-color: #f9fafb;
+      background: #f9fafb;
       transition: border-color 0.3s ease;
     }
     #supportAmount:focus {
-      border-color: #60a5fa;
+      border-color: #3b82f6;
       outline: none;
     }
-    #paypal-buttons {
-      margin-top: 10px;
-      display: none;
+    #supportButton {
+      width: auto;
+      padding: 10px 20px;
+      background: #6b7280;
+      color: white;
+      font-size: 14px;
     }
-    #support-paypal-buttons {
-      margin-top: 10px;
+    #supportButton:hover {
+      background: #4b5563;
+      box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+    }
+    #paypal-buttons, #support-paypal-buttons {
+      margin-top: 15px;
       display: none;
     }
     #result {
-      margin-top: 25px;
+      margin-top: 20px;
       font-size: 16px;
-      color: #4b5563;
-      opacity: 0;
-      animation: fadeIn 0.5s ease forwards;
+      color: #1f2937;
+      text-align: center;
     }
     #result a {
-      color: #60a5fa;
+      color: #3b82f6;
       text-decoration: none;
+      font-weight: 600;
       transition: color 0.3s ease;
     }
     #result a:hover {
-      color: #2563eb;
+      color: #1e3a8a;
       text-decoration: underline;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
     .spinner {
       display: none;
-      width: 30px;
-      height: 30px;
-      border: 4px solid #d1d5db;
-      border-top: 4px solid #60a5fa;
-      border-right: 4px solid #a5b4fc;
+      width: 24px;
+      height: 24px;
+      border: 3px solid #d1d5db;
+      border-top: 3px solid #3b82f6;
       border-radius: 50%;
-      animation: spin 1s ease-in-out infinite;
+      animation: spin 1s linear infinite;
       margin: 20px auto;
     }
     @keyframes spin {
@@ -303,35 +236,29 @@
       100% { transform: rotate(360deg); }
     }
     #authMessage {
-      color: #e11d48;
-      font-size: 16px;
-      font-weight: 600;
-      margin-top: 15px;
-      padding: 10px;
-      background: rgba(225, 29, 72, 0.1);
-      border: 2px solid #e11d48;
+      margin-top: 20px;
+      padding: 12px;
+      background: #fee2e2;
+      border: 1px solid #f87171;
       border-radius: 8px;
+      color: #b91c1c;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
       display: none;
-      animation: pulse 2s infinite;
     }
     #authMessage a {
-      color: #60a5fa;
+      color: #3b82f6;
       text-decoration: underline;
       transition: color 0.3s ease;
     }
     #authMessage a:hover {
-      color: #2563eb;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      color: #1e3a8a;
     }
   </style>
   <script src="https://www.paypal.com/sdk/js?client-id=AWaSPt-xhmtfjM9rjOiyz2itdkrFailpuptA246uKFWthuhzb-jR2AlyGalnn_oEWN088cz0wnDq1_fO&currency=EUR"></script>
 </head>
 <body>
-  <div class="logo">Minotauroak</div>
   <div class="language-selector">
     <img src="https://flagcdn.com/24x18/us.png" alt="English" onclick="setLanguage('en')">
     <img src="https://flagcdn.com/24x18/es.png" alt="Español" onclick="setLanguage('es')">
@@ -348,7 +275,7 @@
     <button id="createButton" onclick="createPlaylist()">Create Playlist</button>
     <button id="donateButton" onclick="donate()">Donate for More Songs</button>
     <div id="paypal-buttons"></div>
-    <div style="margin-top: 15px;">
+    <div class="support-container">
       <input type="number" id="supportAmount" min="0.01" step="0.01" placeholder="€1" value="1">
       <button id="supportButton" onclick="support()">Support the Project</button>
     </div>
