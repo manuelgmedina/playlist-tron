@@ -12,9 +12,9 @@ let currentLanguage = 'en';
 // Traducciones
 const translations = {
   en: {
-    title: 'Playlist-o-Tron',
+    title: 'TuneCraft',
     spotifyLogin: 'Connect Spotify',
-    placeholder: 'What vibes today? (e.g., disco for grumpy cats)',
+    placeholder: "TuneCraft creates custom playlists for you! Tell us what you want (e.g., 'chill jazz for rainy days' or 'upbeat pop for a party'). Steps: 1) Connect Spotify, 2) Type your vibe, 3) Choose 5 free songs or donate €2 for 10, 4) Click 'Create Playlist' to enjoy!",
     sliderLabel: 'How many songs?',
     createButton: 'Create Playlist',
     donateButton: 'Donate for More Songs',
@@ -26,9 +26,9 @@ const translations = {
     supportSuccess: 'Thanks for supporting with €'
   },
   es: {
-    title: 'Playlist-o-Tron',
+    title: 'TuneCraft',
     spotifyLogin: 'Conectar Spotify',
-    placeholder: '¿Qué vibes hoy? (p.ej., disco para gatos gruñones)',
+    placeholder: "¡TuneCraft crea listas personalizadas para ti! Dinos qué quieres (p.ej., 'jazz relajado para días lluviosos' o 'pop animado para una fiesta'). Pasos: 1) Conecta Spotify, 2) Escribe tu vibe, 3) Elige 5 canciones gratis o dona 2€ por 10, 4) Haz clic en 'Crear Lista' para disfrutar!",
     sliderLabel: '¿Cuántas canciones?',
     createButton: 'Crear Lista',
     donateButton: 'Donar por Más Canciones',
