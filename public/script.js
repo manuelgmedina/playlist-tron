@@ -7,6 +7,39 @@ const authMessage = document.getElementById('authMessage');
 let paypalButtonsRendered = false;
 let supportButtonsRendered = false;
 let latestOrderId = null;
+let currentLanguage = 'en';
+
+// Traducciones
+const translations = {
+  en: {
+    title: 'Playlist-o-Tron',
+    spotifyLogin: 'Connect Spotify',
+    placeholder: 'What vibes today? (e.g., disco for grumpy cats)',
+    sliderLabel: 'How many songs?',
+    createButton: 'Create Playlist',
+    donateButton: 'Donate for More Songs',
+    supportButton: 'Support the Project',
+    authMessage: 'Connect with <a href="/spotify/login">Spotify</a> first to use this feature!',
+    paymentErrorLastName: 'Payment failed: Please enter a valid last name (e.g., no special characters or accents).',
+    paymentErrorGeneric: 'Payment error: Something went wrong. Try again.',
+    donationSuccess: 'Thanks for your €2 donation! Creating your playlist...',
+    supportSuccess: 'Thanks for supporting with €'
+  },
+  es: {
+    title: 'Playlist-o-Tron',
+    spotifyLogin: 'Conectar Spotify',
+    placeholder: '¿Qué vibes hoy? (p.ej., disco para gatos gruñones)',
+    sliderLabel: '¿Cuántas canciones?',
+    createButton: 'Crear Lista',
+    donateButton: 'Donar por Más Canciones',
+    supportButton: 'Apoyar el Proyecto',
+    authMessage: '¡Conecta con <a href="/spotify/login">Spotify</a> primero para usar esta función!',
+    paymentErrorLastName: 'Pago fallido: Por favor, introduce un apellido válido (p.ej., sin caracteres especiales ni acentos).',
+    paymentErrorGeneric: 'Error de pago: Algo salió mal. Intenta de nuevo.',
+    donationSuccess: '¡Gracias por tu donación de 2€! Creando tu lista...',
+    supportSuccess: '¡Gracias por apoyar con €'
+  }
+};
 
 songCountInput.addEventListener('input', () => {
   songCountDisplay.textContent = songCountInput.value;
@@ -27,16 +60,33 @@ async function checkSpotifyAuth() {
     const response = await fetch('/api/spotify-auth-status');
     if (!response.ok) throw new Error(`Server error: ${response.status}`);
     const data = await response.json();
+    authMessage.innerHTML = translations[currentLanguage].authMessage;
     authMessage.style.display = data.isAuthenticated ? 'none' : 'block';
     return data.isAuthenticated;
   } catch (error) {
     console.error('Error checking auth:', error);
+    authMessage.innerHTML = translations[currentLanguage].authMessage;
     authMessage.style.display = 'block';
     return false;
   }
 }
 
-window.onload = checkSpotifyAuth;
+function setLanguage(lang) {
+  currentLanguage = lang;
+  document.getElementById('title').textContent = translations[lang].title;
+  document.getElementById('spotifyLogin').textContent = translations[lang].spotifyLogin;
+  document.getElementById('request').placeholder = translations[lang].placeholder;
+  document.getElementById('sliderLabel').textContent = translations[lang].sliderLabel;
+  document.getElementById('createButton').textContent = translations[lang].createButton;
+  document.getElementById('donateButton').textContent = translations[lang].donateButton;
+  document.getElementById('supportButton').textContent = translations[lang].supportButton;
+  authMessage.innerHTML = translations[lang].authMessage;
+}
+
+window.onload = () => {
+  setLanguage('en'); // Idioma predeterminado
+  checkSpotifyAuth();
+};
 
 async function createPlaylist() {
   const isAuthenticated = await checkSpotifyAuth();
@@ -62,7 +112,7 @@ async function createPlaylist() {
       resultDiv.innerHTML = `<p>Your playlist "${data.playlistName}" is ready!</p><a href="${data.playlistUrl}" target="_blank">Listen here!</a>`;
       latestOrderId = null;
     } else {
-      resultDiv.innerHTML = `<p>${data.error}</p><p>Need more than 5 songs? <a href="#" onclick="donate()">Donate $2 here</a> to unlock.</p>`;
+      resultDiv.innerHTML = `<p>${data.error}</p><p>Need more than 5 songs? <a href="#" onclick="donate()">Donate €2 here</a> to unlock.</p>`;
     }
   } catch (error) {
     resultDiv.textContent = 'Error: ' + error.message;
@@ -81,12 +131,15 @@ function donate() {
     return;
   }
 
+  paypalButtonsContainer.innerHTML = '';
+  paypalButtonsContainer.style.display = 'block';
+
   if (!paypalButtonsRendered) {
     paypal.Buttons({
       createOrder: (data, actions) => {
         return actions.order.create({
           purchase_units: [{
-            amount: { value: '2.00', currency_code: 'USD' },
+            amount: { value: '2.00', currency_code: 'EUR' },
             description: 'Unlock a 10-Song Playlist'
           }]
         });
@@ -99,20 +152,24 @@ function donate() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ orderId: data.orderID })
           }).then(() => {
-            alert('Thanks for your $2 donation! Creating your playlist...');
+            alert(translations[currentLanguage].donationSuccess);
             paypalButtonsContainer.style.display = 'none';
             createPlaylist();
           });
         });
       },
       onError: (err) => {
-        document.getElementById('result').textContent = 'Payment error: ' + err.message;
+        console.error('PayPal error:', err);
+        const resultDiv = document.getElementById('result');
+        if (err.message.includes('INVALID_LAST_NAME')) {
+          resultDiv.textContent = translations[currentLanguage].paymentErrorLastName;
+        } else {
+          resultDiv.textContent = translations[currentLanguage].paymentErrorGeneric;
+        }
       }
     }).render('#paypal-buttons');
     paypalButtonsRendered = true;
   }
-
-  paypalButtonsContainer.style.display = 'block';
 }
 
 function support() {
@@ -121,16 +178,19 @@ function support() {
 
   const amount = parseFloat(supportAmountInput.value) || 1.00;
   if (amount < 0.01) {
-    alert('Please enter a valid amount (minimum $0.01).');
+    alert('Please enter a valid amount (minimum €0.01).');
     return;
   }
+
+  supportPaypalButtonsContainer.innerHTML = '';
+  supportPaypalButtonsContainer.style.display = 'block';
 
   if (!supportButtonsRendered) {
     paypal.Buttons({
       createOrder: (data, actions) => {
         return actions.order.create({
           purchase_units: [{
-            amount: { value: amount.toFixed(2), currency_code: 'USD' },
+            amount: { value: amount.toFixed(2), currency_code: 'EUR' },
             description: 'Support the Playlist-o-Tron Project'
           }]
         });
@@ -142,17 +202,16 @@ function support() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ orderId: data.orderID })
           }).then(() => {
-            alert('Thanks for supporting with $' + details.purchase_units[0].amount.value + '!');
+            alert(translations[currentLanguage].supportSuccess + details.purchase_units[0].amount.value + '!');
             supportPaypalButtonsContainer.style.display = 'none';
           });
         });
       },
       onError: (err) => {
-        document.getElementById('result').textContent = 'Support error: ' + err.message;
+        console.error('PayPal error (support):', err);
+        document.getElementById('result').textContent = translations[currentLanguage].paymentErrorGeneric;
       }
     }).render('#support-paypal-buttons');
     supportButtonsRendered = true;
   }
-
-  supportPaypalButtonsContainer.style.display = 'block';
 }
