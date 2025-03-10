@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TuneCraft</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -12,57 +12,59 @@
       box-sizing: border-box;
     }
     body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(120deg, #fefcbf, #fed7aa);
+      font-family: 'Poppins', sans-serif;
+      background: #f4f7fa;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      color: #2d3748;
+      color: #1a202c;
     }
     .container {
       background: #ffffff;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       width: 100%;
-      max-width: 600px;
+      max-width: 550px;
       border: 1px solid #e2e8f0;
     }
-    h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 34px;
-      font-weight: 700;
-      color: #2d3748;
+    header {
       text-align: center;
       margin-bottom: 25px;
-      letter-spacing: 0.5px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2b6cb0;
     }
     .language-selector {
       position: absolute;
       top: 20px;
       right: 20px;
       display: flex;
-      gap: 10px;
+      gap: 12px;
     }
     .language-selector img {
-      width: 24px;
-      height: 24px;
+      width: 48px;
+      height: 36px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      border-radius: 4px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
     .language-selector img:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
+      opacity: 0.9;
     }
     #spotifyLogin {
       display: block;
       background: #1db954;
-      color: white;
+      color: #ffffff;
       padding: 12px;
       border-radius: 8px;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 600;
       text-align: center;
       text-decoration: none;
       transition: background 0.3s ease;
@@ -75,17 +77,17 @@
       width: 100%;
       height: 140px;
       padding: 12px;
-      border: 2px solid #cbd5e1;
+      border: 1px solid #d1d5db;
       border-radius: 8px;
       font-size: 14px;
       resize: none;
-      background: #f7fafc;
+      background: #fafafa;
       color: #4a5568;
       margin-bottom: 20px;
       transition: border-color 0.3s ease;
     }
     textarea:focus {
-      border-color: #ed8936;
+      border-color: #2b6cb0;
       outline: none;
     }
     .slider-container {
@@ -93,21 +95,21 @@
     }
     .slider-label {
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 600;
       color: #4a5568;
       margin-bottom: 8px;
     }
     #songCountDisplay {
       font-size: 16px;
-      color: #ed8936;
-      font-weight: 700;
+      color: #2b6cb0;
+      font-weight: 600;
       margin-top: 6px;
     }
     input[type="range"] {
       -webkit-appearance: none;
       width: 100%;
-      height: 6px;
-      background: linear-gradient(to right, #e2e8f0, #ed8936);
+      height: 5px;
+      background: linear-gradient(to right, #e2e8f0, #2b6cb0);
       border-radius: 3px;
       outline: none;
       cursor: pointer;
@@ -116,7 +118,7 @@
       -webkit-appearance: none;
       width: 16px;
       height: 16px;
-      background: #ed8936;
+      background: #2b6cb0;
       border-radius: 50%;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease;
@@ -127,7 +129,7 @@
     input[type="range"]::-moz-range-thumb {
       width: 16px;
       height: 16px;
-      background: #ed8936;
+      background: #2b6cb0;
       border-radius: 50%;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease;
@@ -141,25 +143,21 @@
       border: none;
       border-radius: 8px;
       font-size: 16px;
-      font-weight: 700;
-      color: white;
-      background: #ed8936;
+      font-weight: 600;
+      color: #ffffff;
+      background: #2b6cb0;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
+      transition: background 0.3s ease;
       margin-bottom: 15px;
     }
     button:hover {
-      background: #f6ad55;
-      transform: translateY(-2px);
-    }
-    button:active {
-      transform: scale(0.98);
+      background: #4299e1;
     }
     #donateButton {
-      background: #dd4b39;
+      background: #e53e3e;
     }
     #donateButton:hover {
-      background: #e57373;
+      background: #f56565;
     }
     .support-container {
       display: flex;
@@ -170,24 +168,24 @@
     #supportAmount {
       width: 80px;
       padding: 8px;
-      border: 2px solid #cbd5e1;
+      border: 1px solid #d1d5db;
       border-radius: 8px;
       font-size: 14px;
-      background: #f7fafc;
+      background: #fafafa;
       transition: border-color 0.3s ease;
     }
     #supportAmount:focus {
-      border-color: #ed8936;
+      border-color: #2b6cb0;
       outline: none;
     }
     #supportButton {
       width: auto;
       padding: 8px 16px;
-      background: #4a5568;
+      background: #718096;
       font-size: 14px;
     }
     #supportButton:hover {
-      background: #718096;
+      background: #a0aec0;
     }
     #paypal-buttons, #support-paypal-buttons {
       margin-bottom: 15px;
@@ -195,25 +193,25 @@
     }
     #result {
       font-size: 16px;
-      color: #2d3748;
+      color: #1a202c;
       text-align: center;
       margin-top: 15px;
     }
     #result a {
-      color: #ed8936;
+      color: #2b6cb0;
       text-decoration: none;
-      font-weight: 700;
+      font-weight: 600;
       transition: color 0.3s ease;
     }
     #result a:hover {
-      color: #f6ad55;
+      color: #4299e1;
     }
     .spinner {
       display: none;
       width: 20px;
       height: 20px;
       border: 3px solid #e2e8f0;
-      border-top: 3px solid #ed8936;
+      border-top: 3px solid #2b6cb0;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 15px auto;
@@ -225,8 +223,8 @@
     #authMessage {
       margin-top: 15px;
       padding: 10px;
-      background: #fee2e2;
-      border: 2px solid #fc8181;
+      background: #fef2f2;
+      border: 1px solid #feb2b2;
       border-radius: 8px;
       color: #c53030;
       font-size: 14px;
@@ -234,23 +232,31 @@
       display: none;
     }
     #authMessage a {
-      color: #ed8936;
+      color: #2b6cb0;
       text-decoration: underline;
       transition: color 0.3s ease;
     }
     #authMessage a:hover {
-      color: #f6ad55;
+      color: #4299e1;
+    }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #718096;
+      margin-top: 20px;
     }
   </style>
   <script src="https://www.paypal.com/sdk/js?client-id=AWaSPt-xhmtfjM9rjOiyz2itdkrFailpuptA246uKFWthuhzb-jR2AlyGalnn_oEWN088cz0wnDq1_fO¤cy=EUR"></script>
 </head>
 <body>
   <div class="language-selector">
-    <img src="https://flagcdn.com/24x18/us.png" alt="English" onclick="setLanguage('en')">
-    <img src="https://flagcdn.com/24x18/es.png" alt="Español" onclick="setLanguage('es')">
+    <img src="https://flagcdn.com/48x36/us.png" alt="English" onclick="setLanguage('en')">
+    <img src="https://flagcdn.com/48x36/es.png" alt="Español" onclick="setLanguage('es')">
   </div>
   <div class="container">
-    <h1 id="title">TuneCraft</h1>
+    <header>
+      <h1 id="title">TuneCraft</h1>
+    </header>
     <a href="/spotify/login" id="spotifyLogin">Connect Spotify</a>
     <textarea id="request" placeholder="Welcome to TuneCraft!\n- What it does: Creates custom Spotify playlists.\n- How to use it:\n  1. Connect your Spotify account.\n  2. Type your vibe (e.g., 'chill jazz' or 'party pop').\n  3. Pick 5 songs (free) or donate €2 for 10.\n  4. Hit 'Create Playlist' and enjoy!"></textarea>
     <div class="slider-container">
@@ -269,6 +275,7 @@
     <div id="spinner" class="spinner"></div>
     <div id="result"></div>
     <div id="authMessage">Connect with <a href="/spotify/login">Spotify</a> first to use this feature!</div>
+    <footer>© 2025 TuneCraft. All rights reserved.</footer>
   </div>
   <script src="script.js"></script>
 </body>
