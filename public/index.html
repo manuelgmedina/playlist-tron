@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Playlist-o-Tron</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>TuneCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -12,251 +12,235 @@
       box-sizing: border-box;
     }
     body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(120deg, #fefcbf, #fed7aa);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      color: #1f2937;
+      color: #2d3748;
     }
     .container {
       background: #ffffff;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
       width: 100%;
-      max-width: 500px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .container:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      border: 1px solid #e2e8f0;
     }
     h1 {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 700;
-      color: #1e3a8a;
+      color: #ed8936;
       text-align: center;
-      margin-bottom: 30px;
-      letter-spacing: -0.5px;
+      margin-bottom: 25px;
     }
     .language-selector {
       position: absolute;
       top: 20px;
       right: 20px;
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
     .language-selector img {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       cursor: pointer;
-      border-radius: 50%;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      transition: transform 0.2s ease;
     }
     .language-selector img:hover {
-      transform: scale(1.15);
-      opacity: 0.85;
+      transform: scale(1.1);
     }
     #spotifyLogin {
       display: block;
       background: #1db954;
       color: white;
-      padding: 14px 0;
-      border-radius: 12px;
+      padding: 12px;
+      border-radius: 8px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: background 0.3s ease, transform 0.3s ease;
-      margin-bottom: 25px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      margin-bottom: 20px;
     }
     #spotifyLogin:hover {
-      background: #1ed760;
-      transform: scale(1.02);
+      background: #22c55e;
     }
     textarea {
       width: 100%;
-      height: 100px;
+      height: 120px;
       padding: 12px;
-      border: 1px solid #d1d5db;
+      border: 2px solid #cbd5e1;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 14px;
       resize: none;
-      background: #f9fafb;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      background: #f7fafc;
+      color: #4a5568;
       margin-bottom: 20px;
+      transition: border-color 0.3s ease;
     }
     textarea:focus {
-      border-color: #3b82f6;
-      box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+      border-color: #ed8936;
       outline: none;
     }
     .slider-container {
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
     .slider-label {
       font-size: 14px;
-      font-weight: 600;
-      color: #4b5563;
-      margin-bottom: 10px;
-      text-align: left;
+      font-weight: 700;
+      color: #4a5568;
+      margin-bottom: 8px;
     }
     #songCountDisplay {
       font-size: 16px;
-      font-weight: 600;
-      color: #3b82f6;
-      margin-top: 8px;
+      color: #ed8936;
+      font-weight: 700;
+      margin-top: 6px;
     }
     input[type="range"] {
       -webkit-appearance: none;
       width: 100%;
       height: 6px;
-      background: linear-gradient(to right, #d1d5db 0%, #d1d5db 50%, #3b82f6 50%, #3b82f6 100%);
+      background: linear-gradient(to right, #e2e8f0, #ed8936);
       border-radius: 3px;
       outline: none;
       cursor: pointer;
     }
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
-      background: #3b82f6;
+      width: 16px;
+      height: 16px;
+      background: #ed8936;
       border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease;
     }
     input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.1);
+      transform: scale(1.2);
     }
     input[type="range"]::-moz-range-thumb {
-      width: 18px;
-      height: 18px;
-      background: #3b82f6;
+      width: 16px;
+      height: 16px;
+      background: #ed8936;
       border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: transform 0.2s ease;
     }
     input[type="range"]::-moz-range-thumb:hover {
-      transform: scale(1.1);
+      transform: scale(1.2);
     }
     button {
       width: 100%;
-      padding: 14px;
+      padding: 12px;
       border: none;
-      border-radius: 12px;
+      border-radius: 8px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       color: white;
-      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      background: #ed8936;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s ease;
       margin-bottom: 15px;
     }
     button:hover {
-      background: linear-gradient(135deg, #60a5fa, #2563eb);
+      background: #f6ad55;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
     }
     button:active {
       transform: scale(0.98);
     }
     #donateButton {
-      background: linear-gradient(135deg, #ec4899, #db2777);
+      background: #dd4b39;
     }
     #donateButton:hover {
-      background: linear-gradient(135deg, #f472b6, #ec4899);
-      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+      background: #e57373;
     }
     .support-container {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-top: 20px;
+      margin-bottom: 15px;
     }
     #supportAmount {
-      width: 100px;
-      padding: 10px;
-      border: 1px solid #d1d5db;
+      width: 80px;
+      padding: 8px;
+      border: 2px solid #cbd5e1;
       border-radius: 8px;
       font-size: 14px;
-      background: #f9fafb;
+      background: #f7fafc;
       transition: border-color 0.3s ease;
     }
     #supportAmount:focus {
-      border-color: #3b82f6;
+      border-color: #ed8936;
       outline: none;
     }
     #supportButton {
       width: auto;
-      padding: 10px 20px;
-      background: #6b7280;
-      color: white;
+      padding: 8px 16px;
+      background: #4a5568;
       font-size: 14px;
     }
     #supportButton:hover {
-      background: #4b5563;
-      box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+      background: #718096;
     }
     #paypal-buttons, #support-paypal-buttons {
-      margin-top: 15px;
+      margin-bottom: 15px;
       display: none;
     }
     #result {
-      margin-top: 20px;
       font-size: 16px;
-      color: #1f2937;
+      color: #2d3748;
       text-align: center;
+      margin-top: 15px;
     }
     #result a {
-      color: #3b82f6;
+      color: #ed8936;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       transition: color 0.3s ease;
     }
     #result a:hover {
-      color: #1e3a8a;
-      text-decoration: underline;
+      color: #f6ad55;
     }
     .spinner {
       display: none;
-      width: 24px;
-      height: 24px;
-      border: 3px solid #d1d5db;
-      border-top: 3px solid #3b82f6;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #e2e8f0;
+      border-top: 3px solid #ed8936;
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin: 20px auto;
+      margin: 15px auto;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
     #authMessage {
-      margin-top: 20px;
-      padding: 12px;
+      margin-top: 15px;
+      padding: 10px;
       background: #fee2e2;
-      border: 1px solid #f87171;
+      border: 2px solid #fc8181;
       border-radius: 8px;
-      color: #b91c1c;
+      color: #c53030;
       font-size: 14px;
-      font-weight: 600;
       text-align: center;
       display: none;
     }
     #authMessage a {
-      color: #3b82f6;
+      color: #ed8936;
       text-decoration: underline;
       transition: color 0.3s ease;
     }
     #authMessage a:hover {
-      color: #1e3a8a;
+      color: #f6ad55;
     }
   </style>
-  <script src="https://www.paypal.com/sdk/js?client-id=AWaSPt-xhmtfjM9rjOiyz2itdkrFailpuptA246uKFWthuhzb-jR2AlyGalnn_oEWN088cz0wnDq1_fO&currency=EUR"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AWaSPt-xhmtfjM9rjOiyz2itdkrFailpuptA246uKFWthuhzb-jR2AlyGalnn_oEWN088cz0wnDq1_fO¤cy=EUR"></script>
 </head>
 <body>
   <div class="language-selector">
@@ -264,9 +248,9 @@
     <img src="https://flagcdn.com/24x18/es.png" alt="Español" onclick="setLanguage('es')">
   </div>
   <div class="container">
-    <h1 id="title">Playlist-o-Tron</h1>
+    <h1 id="title">TuneCraft</h1>
     <a href="/spotify/login" id="spotifyLogin">Connect Spotify</a>
-    <textarea id="request" placeholder="What vibes today? (e.g., disco for grumpy cats)"></textarea>
+    <textarea id="request" placeholder="TuneCraft creates custom playlists for you! Tell us what you want (e.g., 'chill jazz for rainy days' or 'upbeat pop for a party'). Steps: 1) Connect Spotify, 2) Type your vibe, 3) Choose 5 free songs or donate €2 for 10, 4) Click 'Create Playlist' to enjoy!"></textarea>
     <div class="slider-container">
       <div class="slider-label" id="sliderLabel">How many songs?</div>
       <input type="range" id="songCount" min="5" max="10" step="5" value="5">
